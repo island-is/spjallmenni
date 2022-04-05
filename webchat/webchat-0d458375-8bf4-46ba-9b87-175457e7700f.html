@@ -8,11 +8,66 @@
     <h1>web chat test 0d458375-8bf4-46ba-9b87-175457e7700f</h1>
 
     <script>
+      /**
+       * Watch for the customResponse event and forward incoming data to the correct handler.
+       *
+       * @param event The event passed from Watson Assistant
+       * @param event.type The type of event, in this case "customResponse".
+       * @param event.data.message The individual message from output.generic[].
+       * @param event.data.element An HTML element that is rendered in web chat for you to manipulate.
+       */
+      function customResponseHandler(event, instance) {
+        const { message } = event.data;
+        console.log("event", event);
+        console.log("message", message);
+        if( message.user_defined.show_feedback ) {
+          const customPanel = instance.customPanels.getPanel();
+          const panelOptions = {
+            "title": "Hvernig gekk samtalið?",
+          };
+          // https://the-carbon-components.netlify.app/?nav=form
+          customPanel.hostElement.innerHTML =
+          '<div class="bx--form-item">'
+            +'<label for="text-input-3" class="bx--label">Text Input label</label>'
+            +'<div class="bx--form__helper-text">'
+              +'Optional helper text here; if message is more than one line text should wrap (~100 character count maximum)'
+            +'</div>'
+            +'<input id="text-input-3" type="text"'
+              +'class="bx--text-input"'
+              +'placeholder="Optional placeholder text">'
+          +'</div>'
+          +'<div class="bx--form-item">'
+            +'<label for="text-area-2" class="bx--label">Text Area label</label>'
+            +'<div class="bx--form__helper-text">'
+              +'Optional helper text here; if message is more than one line text should wrap (~100 character count maximum)'
+            +'</div>'
+            +'<textarea id="text-area-2" class="bx--text-area"'
+              +'rows="4" cols="50" placeholder="Placeholder text."></textarea>'
+          +'</div>'
+          +'<div class="bx--form-item">'
+            +'<button class="bx--btn bx--btn--primary" type="button">Submit</button>'
+          +'</div>'
+          ;
+
+          customPanel.open(panelOptions);
+        }
+
+      }
+      function receiveHandler(event) {
+        // console.log('intents:', event.data.output.intents);
+        console.log('receive event',event);
+      }
       window.watsonAssistantChatOptions = {
         integrationID: "0d458375-8bf4-46ba-9b87-175457e7700f", // The ID of this integration.
         region: "eu-gb", // The region your integration is hosted in.
         serviceInstanceID: "6534ff9d-96d3-478c-b3be-a4b0504d78a1", // The ID of your service instance.
-        onLoad: function(instance) { instance.render(); }
+        onLoad: function(instance) {
+          // Watch for the customResponse event to handle the user_defined response type.
+          instance.on({ type: 'customResponse', handler: customResponseHandler });
+          instance.on({ type: "receive", handler: receiveHandler });
+
+          instance.render();
+        }
       };
       setTimeout(function(){
         const t=document.createElement('script');
