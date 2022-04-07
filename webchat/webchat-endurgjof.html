@@ -3,18 +3,16 @@
   <head>
     <meta charset="utf-8">
     <script src="./webchat-handlers.js"></script>
-    <title>hello chat</title>
+    <title>Spjallmenni sem tekur við endurgjöf</title>
   </head>
   <body>
-    <h1>web chat test 0d458375-8bf4-46ba-9b87-175457e7700f</h1>
-
+    <h1>Spjallmenni sem tekur við endurgjöf</h1>
     <script>
       window.watsonAssistantChatOptions = {
-        integrationID: "0d458375-8bf4-46ba-9b87-175457e7700f", // The ID of this integration.
+        integrationID: "983d17c7-2942-43d9-8354-4e64553b8b60", // The ID of this integration.
         region: "eu-gb", // The region your integration is hosted in.
-        serviceInstanceID: "6534ff9d-96d3-478c-b3be-a4b0504d78a1", // The ID of your service instance.
+        serviceInstanceID: "bc3d8312-d862-4750-b8bf-529db282050a", // The ID of your service instance.
         onLoad: function(instance) {
-          // Watch for the customResponse event to handle the user_defined response type.
           instance.on({ type: 'customResponse', handler: customResponseHandler });
           instance.on({ type: "receive", handler: receiveHandler });
           instance.on({ type: "send", handler: sendHandler });
