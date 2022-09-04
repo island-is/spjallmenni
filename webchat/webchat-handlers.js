@@ -4,9 +4,10 @@ let customPanel;
 function submitFeedback() {
   const email = document.getElementById("text-input-3").value;
   const feedback = document.getElementById("text-area-2").value;
+  const timestamp = Date.now();
   console.log("textInput3", email);
   console.log("textArea2", feedback);
-  const feedbackData = {email, feedback, assistantChatLog};
+  const feedbackData = {email, feedback, assistantChatLog, timestamp};
   console.log("feedbackData", feedbackData);
 
   fetch(`${FEEDBACK_WS_URL}/feedback`, {
