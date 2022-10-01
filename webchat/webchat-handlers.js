@@ -1,13 +1,24 @@
 const FEEDBACK_WS_URL = "https://assistantmultiagentroutingbthj.m4f8jn2ctw8.eu-gb.codeengine.appdomain.cloud";
 let assistantChatLog = [];
 let customPanel;
+let thumbStatus = 0;
+function changeThumbStatus( s ) {
+  thumbStatus = thumbStatus === s ? 0 : s;
+  document.getElementById("webchat-feedback-thumb-up").src="https://island-is-chatbot-feedback.s3.eu-de.cloud-object-storage.appdomain.cloud/thumb-off.png";
+  document.getElementById("webchat-feedback-thumb-down").src="https://island-is-chatbot-feedback.s3.eu-de.cloud-object-storage.appdomain.cloud/thumb-off.png";
+  if( 1 === thumbStatus ) {
+    document.getElementById("webchat-feedback-thumb-up").src="https://island-is-chatbot-feedback.s3.eu-de.cloud-object-storage.appdomain.cloud/thumb-on.png";
+  } else if( -1 === thumbStatus ) {
+    document.getElementById("webchat-feedback-thumb-down").src="https://island-is-chatbot-feedback.s3.eu-de.cloud-object-storage.appdomain.cloud/thumb-on.png";
+  }
+}
 function submitFeedback() {
   const email = document.getElementById("text-input-3").value;
   const feedback = document.getElementById("text-area-2").value;
   const timestamp = Date.now();
   console.log("textInput3", email);
   console.log("textArea2", feedback);
-  const feedbackData = {email, feedback, assistantChatLog, timestamp};
+  const feedbackData = {email, feedback, assistantChatLog, thumbStatus, timestamp};
   console.log("feedbackData", feedbackData);
 
   fetch(`${FEEDBACK_WS_URL}/feedback`, {
@@ -38,26 +49,36 @@ function customResponseHandler(event, instance) {
     };
     // https://the-carbon-components.netlify.app/?nav=form
     customPanel.hostElement.innerHTML =
-    '<div class="bx--form-item">'
+    '<div style="margin: 1em;">'
++    '<div class="bx--form-item" style="margin-bottom:1em;">'
       +'<label for="text-input-3" class="bx--label">Við viljum gjarnan heyra þína skoðun:</label>'
       +'<div class="bx--form__helper-text">'
         +'Netfang'
       +'</div>'
       +'<input id="text-input-3" type="text"'
         +'class="bx--text-input"'
-        +'placeholder="Optional placeholder text">'
+        +'placeholder="Netfang.">'
     +'</div>'
     +'<div class="bx--form-item">'
-      +'<label for="text-area-2" class="bx--label">Þín skoðun</label>'
+      +'<label for="text-area-2" class="bx--label">Þín skoðun:</label>'
       +'<div class="bx--form__helper-text">'
         +'Hvernig fannst þér samtalið ganga?'
       +'</div>'
       +'<textarea id="text-area-2" class="bx--text-area"'
-        +'rows="4" cols="50" placeholder="Placeholder text."></textarea>'
+        +'rows="4" cols="50" placeholder="Athugasemd."></textarea>'
     +'</div>'
-    +'<div class="bx--form-item">'
+
++   '<div style="text-align: center;">'
++   '<img id="webchat-feedback-thumb-up" src="https://island-is-chatbot-feedback.s3.eu-de.cloud-object-storage.appdomain.cloud/thumb-off.png" style="max-width: 45px; transform: scaleY(1); margin: 1em; cursor: pointer;" onclick="changeThumbStatus(1)" alt="Thumb" />'
++   '<img id="webchat-feedback-thumb-down" src="https://island-is-chatbot-feedback.s3.eu-de.cloud-object-storage.appdomain.cloud/thumb-off.png" style="max-width: 45px; transform: scaleY(-1); margin: 1em; cursor: pointer;" onclick="changeThumbStatus(-1)" alt="Thumb" />'
++   '</div>'
+
+    +'<div class="bx--form-item" style="margin-bottom: 1em;">'
       +'<button class="bx--btn bx--btn--primary" type="button" onclick="submitFeedback()">Senda</button>'
     +'</div>'
+
++   '<em>Thumbs created by Oh Rian from the Noun Project</em>'
++   '</div>'
     ;
 
     setTimeout( () => {
