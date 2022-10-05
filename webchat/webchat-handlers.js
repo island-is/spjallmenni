@@ -50,28 +50,20 @@ function customResponseHandler(event, instance) {
     // https://the-carbon-components.netlify.app/?nav=form
     customPanel.hostElement.innerHTML =
     '<div style="margin: 1em;">'
-+    '<div class="bx--form-item" style="margin-bottom:1em;">'
-      +'<label for="text-input-3" class="bx--label">Við viljum gjarnan heyra þína skoðun:</label>'
-      +'<div class="bx--form__helper-text">'
-        +'Netfang'
-      +'</div>'
-      +'<input id="text-input-3" type="text"'
-        +'class="bx--text-input"'
-        +'placeholder="Netfang.">'
-    +'</div>'
-    +'<div class="bx--form-item">'
-      +'<label for="text-area-2" class="bx--label">Þín skoðun:</label>'
+
++   '<div style="text-align: center;">'
++   '<img id="webchat-feedback-thumb-up" src="https://island-is-chatbot-feedback.s3.eu-de.cloud-object-storage.appdomain.cloud/thumb-off.png" style="max-width: 65px; transform: scaleY(1); margin: 1em; cursor: pointer;" onclick="changeThumbStatus(1)" alt="Thumb" />'
++   '<img id="webchat-feedback-thumb-down" src="https://island-is-chatbot-feedback.s3.eu-de.cloud-object-storage.appdomain.cloud/thumb-off.png" style="max-width: 65px; transform: scaleY(-1); margin: 1em; cursor: pointer;" onclick="changeThumbStatus(-1)" alt="Thumb" />'
++   '</div>'
+
+    +'<div class="bx--form-item" style="margin-bottom: 1em;">'
+      +'<label for="text-area-2" class="bx--label">Við viljum gjarnan heyra þína skoðun:</label>'
       +'<div class="bx--form__helper-text">'
         +'Hvernig fannst þér samtalið ganga?'
       +'</div>'
       +'<textarea id="text-area-2" class="bx--text-area"'
         +'rows="4" cols="50" placeholder="Athugasemd."></textarea>'
     +'</div>'
-
-+   '<div style="text-align: center;">'
-+   '<img id="webchat-feedback-thumb-up" src="https://island-is-chatbot-feedback.s3.eu-de.cloud-object-storage.appdomain.cloud/thumb-off.png" style="max-width: 45px; transform: scaleY(1); margin: 1em; cursor: pointer;" onclick="changeThumbStatus(1)" alt="Thumb" />'
-+   '<img id="webchat-feedback-thumb-down" src="https://island-is-chatbot-feedback.s3.eu-de.cloud-object-storage.appdomain.cloud/thumb-off.png" style="max-width: 45px; transform: scaleY(-1); margin: 1em; cursor: pointer;" onclick="changeThumbStatus(-1)" alt="Thumb" />'
-+   '</div>'
 
     +'<div class="bx--form-item" style="margin-bottom: 1em;">'
       +'<button class="bx--btn bx--btn--primary" type="button" onclick="submitFeedback()">Senda</button>'
